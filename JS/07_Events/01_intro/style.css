@@ -1,0 +1,16 @@
+#box{
+    background-color: blue;
+    height: 100px;
+    width: 100px;
+    border: 2px red solid;
+    text-align: center;
+    margin: 5px 5px 5px 5px;
+}
+#box1{
+    background-color: rgb(255, 187, 0);
+    height: 100px;
+    width: 100px;
+    border: 2px red solid;
+    text-align: center;
+    margin: 5px 5px 5px 5px;
+}
