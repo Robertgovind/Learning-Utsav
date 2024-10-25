@@ -12,7 +12,7 @@ export default class BookController {
         res.send(400).send({ message: "error during addition of new book" });
       }
     } catch (err) {
-      console.log(err);
+      return res.json({ success: false, message: err });
     }
   }
 
@@ -58,7 +58,11 @@ export default class BookController {
             },
           },
         },
+        raw: true,
       });
+      for (let d of data) {
+        d.image = "http://localhost:3000/uploads/" + d.image;
+      }
       res.status(200).send(data);
     } else {
       res.status(400).send({ message: "unsuccessful" });
@@ -68,10 +72,9 @@ export default class BookController {
     let { limit } = req.query;
     if (!limit) limit = 20;
 
-    const data = await bookModel.findAll({ limit: limit });
+    const data = await bookModel.findAll({ limit: parseInt(limit), raw: true });
     for (let d of data) {
-      d.dataValues.image =
-        "http://localhost:3000/uploads/" + d.dataValues.image;
+      d.image = "http://localhost:3000/uploads/" + d.image;
     }
     if (data) {
       res.status(200).send(data);
@@ -88,7 +91,7 @@ export default class BookController {
       },
     });
     if (data) {
-      res.sendStatus(200).send(data);
+      res.sendStatus(200).send({ message: "Book deleted" });
     } else {
       res.status(400).send({ message: "unsuccessful" });
     }
